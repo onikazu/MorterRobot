@@ -1,2 +1,7 @@
 wiringpi のインストール
-http://www.feijoa.jp/work/hal/wiringPi/
+https://qiita.com/nanbuwks/items/9f7e709025b587c038d2
+
+ta7291pのピンについて
+http://d.hatena.ne.jp/seinzumtode/20120724/1343116830
+
+配線、test.pyについて
