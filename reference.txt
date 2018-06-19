@@ -1,0 +1,2 @@
+wiringpi のインストール
+http://www.feijoa.jp/work/hal/wiringPi/
