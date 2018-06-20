@@ -30,7 +30,7 @@ wiringpi.pinMode( right_back_pin, 1 )
 wiringpi.pinMode( left_back_pin, 1 )
 wiringpi.pinMode( left_forward_pin, 1 )
 
-if order == "go right":
+if order == "goright":
     if second == 0:
         print("右前進 止めるときはbreak 0コマンド！")
     else:
@@ -38,7 +38,7 @@ if order == "go right":
     wiringpi.digitalWrite( right_forward_pin, 1 )
     wiringpi.digitalWrite( right_back_pin, 0 )
     time.sleep(second)
-elif order == "back right":
+elif order == "backright":
     if second == 0:
         print("右後進 止めるときはbreak 0コマンド！")
     else:
@@ -46,7 +46,7 @@ elif order == "back right":
     wiringpi.digitalWrite( right_forward_pin, 0 )
     wiringpi.digitalWrite( right_back_pin, 1 )
     time.sleep(second)
-elif order == "go left":
+elif order == "goleft":
     if second == 0:
         print("左前進 止めるときはbreak 0コマンド！")
     else:
@@ -54,7 +54,7 @@ elif order == "go left":
     wiringpi.digitalWrite( left_forward_pin, 1 )
     wiringpi.digitalWrite( left_back_pin, 0 )
     time.sleep(second)
-elif order == "back left":
+elif order == "backleft":
     if second == 0:
         print("左後進 止めるときはbreak 0コマンド！")
     else:
