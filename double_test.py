@@ -62,7 +62,27 @@ elif order == "backleft":
     wiringpi.digitalWrite( left_forward_pin, 0 )
     wiringpi.digitalWrite( left_back_pin, 1 )
     time.sleep(second)
-    
+elif order == "gostraight"
+    if second == 0:
+        print("前進 止めるときはbreak 0コマンド！")
+    else:
+        print(str(second)+"秒前進")    
+    wiringpi.digitalWrite( left_forward_pin, 1 )
+    wiringpi.digitalWrite( left_back_pin, 0 )
+    wiringpi.digitalWrite( right_forward_pin, 1 )
+    wiringpi.digitalWrite( right_back_pin, 0 )
+    time.sleep(second)
+elif order == "back":
+    if second == 0:
+        print("後進 止めるときはbreak 0コマンド！")
+    else:
+        print(str(second)+"秒後進")
+    wiringpi.digitalWrite( left_forward_pin, 0 )
+    wiringpi.digitalWrite( left_back_pin, 1 )
+    wiringpi.digitalWrite( right_forward_pin, 0 )
+    wiringpi.digitalWrite( right_back_pin, 1 )
+    time.sleep(second)
+        
     
 # 第2引数が0の場合は、ブレーキをしない
 # 第1引数がbreakの場合は、ブレーキ
