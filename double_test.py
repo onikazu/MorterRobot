@@ -62,7 +62,7 @@ elif order == "backleft":
     wiringpi.digitalWrite( left_forward_pin, 0 )
     wiringpi.digitalWrite( left_back_pin, 1 )
     time.sleep(second)
-elif order == "gostraight"
+elif order == "gostraight":
     if second == 0:
         print("前進 止めるときはbreak 0コマンド！")
     else:
