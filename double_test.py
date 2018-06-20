@@ -18,8 +18,8 @@ order = param[1]
 second = int(param[2])
 
 # GPIO端子の設定
-right_back_pin = 4
-right_forward_pin = 17
+right_forward_pin = 4
+right_back_pin = 17
 left_back_pin = 11
 left_forward_pin = 9
 
