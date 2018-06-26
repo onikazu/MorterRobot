@@ -31,7 +31,7 @@ def keep_move(boolean):
 
 
 # モーターの動作に関する関数
-def morter():
+def morter(exists_laptop):
     if order == "goright":
         wiringpi.digitalWrite( right_forward_pin, 1 )
         wiringpi.digitalWrite( right_back_pin, 0 )
@@ -88,8 +88,8 @@ def camera():
         for result in results:
             # print(result)
             label = result[1]
-            accu  = str(result[2])
-        #gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+            accu = str(result[2])
+        # gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
         # show the frame
         new_label = label + accu
@@ -98,7 +98,7 @@ def camera():
         cv2.imshow("Frame", image)
         key = cv2.waitKey(1) & 0xFF
         # 止まるように
-        if(result[1]==stop_item):
+        if result[1] == stop_item:
                 not_exist = False
         # clear the stream in preparation for the next frame
         rawCapture.truncate(0)
@@ -144,7 +144,7 @@ if __name__ == "__main__":
     model = MobileNet(weights='imagenet')
 
     thread_1 = threading.Thread(target=morter)
-    thread_2 = threading.Thread(target=camera)
+    thread_2 = threading.Thread(target=camera, args=(not_exist,))
 
     thread_1.start()
     thread_2.start()
