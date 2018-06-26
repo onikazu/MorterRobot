@@ -1,4 +1,4 @@
-#MorterRobot
+# MorterRobot
 ## 概要
 ４つのタイヤが付いたカメラ付き車型ロボット（未完）
 
@@ -14,3 +14,16 @@ test_circuit.JPGのように回路を組み、一つのモータにつなげる�
 python3 test.py go 5
 ~~~
 
+
+- double_test.py  
+.JPGのようにきろ
+
+- robot_with_camera.py  
+命令はコマンド引数を用いる
+第一引数でdouble_test.pyと同じように命令できる
+notebook が映ると止まる
+
+~~~
+# 実行例
+python3 robot_with_camera.py go
+~~~
