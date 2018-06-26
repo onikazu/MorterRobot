@@ -143,8 +143,8 @@ if __name__ == "__main__":
     print("[INFO] loading model...")
     model = MobileNet(weights='imagenet')
 
-    thread_1 = threading.Thread(target=morter)
-    thread_2 = threading.Thread(target=camera, args=(not_exist,))
+    thread_1 = threading.Thread(target=morter, args=(not_exist,))
+    thread_2 = threading.Thread(target=camera)
 
     thread_1.start()
     thread_2.start()
