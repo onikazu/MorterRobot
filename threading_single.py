@@ -83,38 +83,17 @@ class MorterThread(threading.Thread):
             while boolean:
                 time.sleep(1)
             print("ブレーキ！")
-            wiringpi.digitalWrite( right_forward_pin, 1 )
-            wiringpi.digitalWrite( left_forward_pin, 1 )
-            wiringpi.digitalWrite( right_back_pin, 1 )
-            wiringpi.digitalWrite( left_back_pin, 1 )
+            wiringpi.digitalWrite( motor1_pin, 1 )
+            wiringpi.digitalWrite( motor2_pin, 1 )
 
-        if order == "goright":
-            wiringpi.digitalWrite( right_forward_pin, 1 )
-            wiringpi.digitalWrite( right_back_pin, 0 )
+        if order == "go":
+            wiringpi.digitalWrite( motor1_pin, 1 )
+            wiringpi.digitalWrite( motor2_pin, 0 )
             keep_move(not_exist)
-        elif order == "backright":
-            wiringpi.digitalWrite( right_forward_pin, 0 )
-            wiringpi.digitalWrite( right_back_pin, 1 )
-            keep_move(not_exist)
-        elif order == "goleft":
-            wiringpi.digitalWrite( left_forward_pin, 1 )
-            wiringpi.digitalWrite( left_back_pin, 0 )
-            keep_move(not_exist)
-        elif order == "backleft":
-            wiringpi.digitalWrite( left_forward_pin, 0 )
-            wiringpi.digitalWrite( left_back_pin, 1 )
-            keep_move(not_exist)
-        elif order == "gostraight":
-            wiringpi.digitalWrite( left_forward_pin, 1 )
-            wiringpi.digitalWrite( left_back_pin, 0 )
-            wiringpi.digitalWrite( right_forward_pin, 1 )
-            wiringpi.digitalWrite( right_back_pin, 0 )
-            keep_move(not_exist)
+
         elif order == "back":
-            wiringpi.digitalWrite( left_forward_pin, 0 )
-            wiringpi.digitalWrite( left_back_pin, 1 )
-            wiringpi.digitalWrite( right_forward_pin, 0 )
-            wiringpi.digitalWrite( right_back_pin, 1 )
+            wiringpi.digitalWrite( motor1_pin, 0 )
+            wiringpi.digitalWrite( motor2_pin, 1 )
             keep_move(not_exist)
 
 
@@ -131,17 +110,12 @@ param = sys.argv
 order = param[1]
 
 # GPIO端子の設定
-right_forward_pin = 4
-right_back_pin = 17
-left_back_pin = 11
-left_forward_pin = 9
+motor1_pin = 23
+motor2_pin = 24
 
-# GPIO出力モードを1に設定する(onにするということ)
 wiringpi.wiringPiSetupGpio()
-wiringpi.pinMode( right_forward_pin, 1 )
-wiringpi.pinMode( right_back_pin, 1 )
-wiringpi.pinMode( left_back_pin, 1 )
-wiringpi.pinMode( left_forward_pin, 1 )
+wiringpi.pinMode( motor1_pin, 1 )
+wiringpi.pinMode( motor2_pin, 1 )
 
 # カメラの初期化(必ず関数の外側で！！！)
 camera = PiCamera()
