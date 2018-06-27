@@ -32,7 +32,7 @@ class CameraThread(threading.Thread):
         rawCapture = PiRGBArray(camera, size=(320, 240))
 
         # allow the camera to warmup
-        time.sleep(0.1)
+        time.sleep(0.1)        
 
         # capture frames from camera
         for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True):
