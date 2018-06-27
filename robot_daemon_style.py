@@ -11,7 +11,7 @@ import threading
 import time
 import sys
 
-def moter()
+def moter():
     if order == "goright":
         wiringpi.digitalWrite( right_forward_pin, 1 )
         wiringpi.digitalWrite( right_back_pin, 0 )
