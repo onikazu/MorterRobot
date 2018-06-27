@@ -6,8 +6,8 @@ import time
 import sys
 
 # GPIO端子の設定
-motor1_pin = 23
-motor2_pin = 24
+motor1_pin = 14
+motor2_pin = 15
 
 # 引数
 param = sys.argv
@@ -38,7 +38,7 @@ elif order == "back":
     if second == 0:
         print("逆回転 止めるときはbreak 0コマンド！")
     else:
-        print(str(second)+"秒逆回転")    
+        print(str(second)+"秒逆回転")
     wiringpi.digitalWrite( motor1_pin, 0 )
     wiringpi.digitalWrite( motor2_pin, 1 )
     time.sleep(second)
