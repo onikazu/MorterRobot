@@ -91,31 +91,31 @@ class MorterThread(threading.Thread):
         if order == "goright":
             wiringpi.digitalWrite( right_forward_pin, 1 )
             wiringpi.digitalWrite( right_back_pin, 0 )
-            keep_move(exists_laptop)
+            keep_move(not_exist)
         elif order == "backright":
             wiringpi.digitalWrite( right_forward_pin, 0 )
             wiringpi.digitalWrite( right_back_pin, 1 )
-            keep_move(exists_laptop)
+            keep_move(not_exist)
         elif order == "goleft":
             wiringpi.digitalWrite( left_forward_pin, 1 )
             wiringpi.digitalWrite( left_back_pin, 0 )
-            keep_move(exists_laptop)
+            keep_move(not_exist)
         elif order == "backleft":
             wiringpi.digitalWrite( left_forward_pin, 0 )
             wiringpi.digitalWrite( left_back_pin, 1 )
-            keep_move(exists_laptop)
+            keep_move(not_exist)
         elif order == "gostraight":
             wiringpi.digitalWrite( left_forward_pin, 1 )
             wiringpi.digitalWrite( left_back_pin, 0 )
             wiringpi.digitalWrite( right_forward_pin, 1 )
             wiringpi.digitalWrite( right_back_pin, 0 )
-            keep_move(exists_laptop)
+            keep_move(not_exist)
         elif order == "back":
             wiringpi.digitalWrite( left_forward_pin, 0 )
             wiringpi.digitalWrite( left_back_pin, 1 )
             wiringpi.digitalWrite( right_forward_pin, 0 )
             wiringpi.digitalWrite( right_back_pin, 1 )
-            keep_move(exists_laptop)
+            keep_move(not_exist)
 
 
 param = sys.argv
