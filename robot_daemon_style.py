@@ -12,6 +12,7 @@ import time
 import sys
 
 def moter():
+    global order
     if order == "goright":
         wiringpi.digitalWrite( right_forward_pin, 1 )
         wiringpi.digitalWrite( right_back_pin, 0 )
