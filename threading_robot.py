@@ -34,6 +34,7 @@ class CameraThread(threading.Thread):
         for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True):
             # grab the raw NumPy array representing the image, then initialize the timestamp
             # and occupied/unoccupied text
+            print('camera is moving')
             image = frame.array
             # machine learning
             # resize to mobile size(224, 224)
