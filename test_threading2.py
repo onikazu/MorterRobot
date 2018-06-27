@@ -10,7 +10,7 @@ class MyThread1(threading.Thread):
     def run(self):
         global g_cnt
 
-        while True:        
+        while True:
             # read
             print('{0} :value -> {1} :time -> {2}'.format(self.name, str(g_cnt), str(datetime.datetime.now())))
             time.sleep(5)
