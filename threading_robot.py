@@ -46,7 +46,6 @@ class CameraThread(threading.Thread):
                 img = img.resize((224, 224))
                 x = img
                 pred_data = np.expand_dims(x, axis=0)
-                print(preprocess_input(pred_data))
                 preds = model.predict(preprocess_input(pred_data))
                 results = decode_predictions(preds, top=1)[0]
                 for result in results:
