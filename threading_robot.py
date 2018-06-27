@@ -118,6 +118,35 @@ class MorterThread(threading.Thread):
             keep_move(exists_laptop)
 
 
+param = sys.argv
+
+# 第1引数
+# gostraight : まっすぐ前進
+# goleft : 左折
+# goright : 右折
+# back : まっすぐ後進
+# backleft : 左へ後進
+# backright : 右へ後進
+# break : ブレーキ
+order = param[1]
+
+# GPIO端子の設定
+right_forward_pin = 4
+right_back_pin = 17
+left_back_pin = 11
+left_forward_pin = 9
+
+# GPIO出力モードを1に設定する(onにするということ)
+wiringpi.wiringPiSetupGpio()
+wiringpi.pinMode( right_forward_pin, 1 )
+wiringpi.pinMode( right_back_pin, 1 )
+wiringpi.pinMode( left_back_pin, 1 )
+wiringpi.pinMode( left_forward_pin, 1 )
+
+# ラップトップがあるかどうかのフラグ
+not_exist = True
+stop_item = 'notebook'
+
 thread1 = CameraThread()
 thread2 = MorterThread()
 
