@@ -47,9 +47,11 @@ class CameraThread(threading.Thread):
                 pred_data = np.expand_dims(x, axis=0)
                 preds = model.predict(preprocess_input(pred_data))
                 results = decode_predictions(preds, top=1)[0]
+                item = ''
                 for result in results:
                     # print(result)
                     label = result[1]
+                    item = label
                     accu = str(result[2])
                 # gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
@@ -60,7 +62,7 @@ class CameraThread(threading.Thread):
                 cv2.imshow("Frame", image)
                 key = cv2.waitKey(1) & 0xFF
                 # 止まるように
-                if result[1] == stop_item:
+                if item == stop_item:
                         not_exist = False
                 # clear the stream in preparation for the next frame
                 rawCapture.truncate(0)
