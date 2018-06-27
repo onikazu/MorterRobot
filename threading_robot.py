@@ -27,12 +27,6 @@ class CameraThread(threading.Thread):
         global camera
         global rawCapture
 
-        # カメラの初期化
-        camera = PiCamera()
-        camera.resolution = (320, 240)
-        camera.framerate = 32
-        rawCapture = PiRGBArray(camera, size=(320, 240))
-
         # allow the camera to warmup
         time.sleep(0.1)
 
@@ -145,7 +139,7 @@ wiringpi.pinMode( right_back_pin, 1 )
 wiringpi.pinMode( left_back_pin, 1 )
 wiringpi.pinMode( left_forward_pin, 1 )
 
-# カメラの初期化
+# カメラの初期化(必ず関数の外側で！！！)
 camera = PiCamera()
 camera.resolution = (320, 240)
 camera.framerate = 32
