@@ -81,7 +81,7 @@ class MorterThread(threading.Thread):
         # 動くか判定する
         def keep_move(boolean):
             while boolean:
-                print('There are no laptops. keep moving!')
+                time.sleep(1)
             print("ブレーキ！")
             wiringpi.digitalWrite( right_forward_pin, 1 )
             wiringpi.digitalWrite( left_forward_pin, 1 )
