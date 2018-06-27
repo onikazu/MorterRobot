@@ -14,6 +14,7 @@ import os
 
 print("[INFO] loading model...")
 model = MobileNet(weights='imagenet')
+print("[INFO] loading is done")
 
 # 対象物があるかどうかを示すフラグ
 not_exist = True
