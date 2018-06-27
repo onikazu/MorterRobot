@@ -6,8 +6,8 @@ import time
 import sys
 
 # GPIO端子の設定
-motor1_pin = 8
-motor2_pin = 10
+motor1_pin = 23
+motor2_pin = 24
 
 # 引数
 param = sys.argv
