@@ -24,6 +24,8 @@ class CameraThread(threading.Thread):
 
     def run(self):
         global not_exist
+        global camera
+        global rawCapture
 
         # カメラの初期化
         camera = PiCamera()
@@ -32,7 +34,7 @@ class CameraThread(threading.Thread):
         rawCapture = PiRGBArray(camera, size=(320, 240))
 
         # allow the camera to warmup
-        time.sleep(0.1)        
+        time.sleep(0.1)
 
         # capture frames from camera
         for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True):
@@ -142,6 +144,12 @@ wiringpi.pinMode( right_forward_pin, 1 )
 wiringpi.pinMode( right_back_pin, 1 )
 wiringpi.pinMode( left_back_pin, 1 )
 wiringpi.pinMode( left_forward_pin, 1 )
+
+# カメラの初期化
+camera = PiCamera()
+camera.resolution = (320, 240)
+camera.framerate = 32
+rawCapture = PiRGBArray(camera, size=(320, 240))
 
 # ラップトップがあるかどうかのフラグ
 not_exist = True
