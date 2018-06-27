@@ -132,7 +132,5 @@ thread1 = CameraThread()
 thread2 = MorterThread()
 
 thread1.start()
-thread2.start()
-
 thread1.join()
-thread2.join()
+thread2.start()
