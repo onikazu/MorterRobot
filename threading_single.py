@@ -80,11 +80,10 @@ class MorterThread(threading.Thread):
 
         # 動くか判定する
         def keep_move(boolean):
-            while boolean:
-                time.sleep(1)
-            print("ブレーキ！")
-            wiringpi.digitalWrite( motor1_pin, 1 )
-            wiringpi.digitalWrite( motor2_pin, 1 )
+            if not boolean:
+                print("ブレーキ！")
+                wiringpi.digitalWrite( motor1_pin, 1 )
+                wiringpi.digitalWrite( motor2_pin, 1 )
 
         if order == "go":
             wiringpi.digitalWrite( motor1_pin, 1 )
