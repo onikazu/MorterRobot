@@ -11,6 +11,9 @@ import threading, time, datetime
 import sys
 import os
 
+print("[INFO] loading model...")
+model = MobileNet(weights='imagenet')
+
 # 対象物があるかどうかを示すフラグ
 not_exist = True
 
