@@ -1,7 +1,7 @@
 """
-モーターを動かしながら、物体認識付きカメラを動かすプログラム
+モーターを動かしながら、物体認識付きカメラを動かし、
+ラップトップを見つけたら止まるプログラム
 物体認識にtime.sleepを入れて低負荷にした
-→ 成功　with が肝
 """
 
 
@@ -43,8 +43,14 @@ def motor():
         wiringpi.digitalWrite(motor1_pin, 0)
         wiringpi.digitalWrite(motor2_pin, 1)
 
+    while True:
+        if does_exist:
+            wiringpi.digitalWrite(motor1_pin, 1)
+            wiringpi.digitalWrite(motor2_pin, 1)
+
 
 def camera():
+    global does_exist
     for frame in my_camera.capture_continuous(rawCapture, format="bgr", use_video_port=True):
         # grab the raw NumPy array representing the image, then initialize the timestamp
         # and occupied/unoccupied text
@@ -72,8 +78,11 @@ def camera():
         cv2.imshow("Frame", image)
         key = cv2.waitKey(1) & 0xFF
 
+        if label == stop_item:
+            does_exist == True
+
         rawCapture.truncate(0)
-        time.sleep(2)
+        time.sleep(video_frame_step)
         if key == ord("q"):
             break
 
@@ -101,6 +110,11 @@ if __name__ == "__main__":
     wiringpi.wiringPiSetupGpio()
     wiringpi.pinMode(motor1_pin, 1)
     wiringpi.pinMode(motor2_pin, 1)
+
+    does_exist = False
+    stop_item = "laptop"
+    video_frame_step = 5
+
 
     th1 = threading.Thread(target=motor, name="motor", args=())
     th2 = threading.Thread(target=camera, name="camera", args=())
