@@ -16,10 +16,9 @@ def camera():
     global not_exist
     global my_camera
     global rawCapture
-    global graph
     global stop_item
 
-    with graph.as_default():
+    with tf.Graph().as_default():
         # allow the camera to warmup
         time.sleep(0.1)
 
