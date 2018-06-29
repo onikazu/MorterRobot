@@ -65,6 +65,7 @@ for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=
             GPIO.cleanup()
     # clear the stream in preparation for the next frame
     rawCapture.truncate(0)
+    time.sleep(3)
 
     # if the `q` key was pressed, break from the loop
     if key == ord("q"):
