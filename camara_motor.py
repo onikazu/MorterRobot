@@ -14,16 +14,17 @@ import os
 
 def camera():
     global not_exist
-    global camera
+    global my_camera
     global rawCapture
     global graph
+    global stop_item
 
     with graph.as_default():
         # allow the camera to warmup
         time.sleep(0.1)
 
         # capture frames from camera
-        for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True):
+        for frame in my_camera.capture_continuous(rawCapture, format="bgr", use_video_port=True):
             print("read a frame")
             # grab the raw NumPy array representing the image, then initialize the timestamp
             # and occupied/unoccupied text
@@ -107,17 +108,17 @@ if __name__ == "__main__":
     wiringpi.pinMode(motor2_pin, 1)
 
     # カメラの初期化(必ず関数の外側で！！！)
-    camera = PiCamera()
-    camera.resolution = (320, 240)
-    camera.framerate = 32
-    rawCapture = PiRGBArray(camera, size=(320, 240))
+    my_camera = PiCamera()
+    my_camera.resolution = (320, 240)
+    my_camera.framerate = 32
+    rawCapture = PiRGBArray(my_camera, size=(320, 240))
 
     # ラップトップがあるかどうかのフラグ
     not_exist = True
     stop_item = 'notebook'
 
     th1 = threading.Thread(target=camera, name="th", args=())
-    th2 = threading.Thread(target=motor, name="th", args=())
+    # th2 = threading.Thread(target=motor, name="th", args=())
 
     th1.start()
-    th2.start()
+    # th2.start()
