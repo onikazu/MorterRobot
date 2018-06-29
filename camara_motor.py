@@ -1,3 +1,4 @@
+import wiringpi
 from picamera.array import PiRGBArray
 from picamera import PiCamera
 from keras.applications.mobilenet import MobileNet, preprocess_input, decode_predictions
@@ -82,6 +83,9 @@ def motor():
 
 
 if __name__ == "__main__":
+    print("[INFO] loading model...")
+    model = MobileNet(weights='imagenet')
+    print("[INFO] loading is done")
     param = sys.argv
 
     # 第1引数
