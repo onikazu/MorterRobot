@@ -55,17 +55,18 @@ def camera():
         img = img.resize((224, 224))
         x = img
         pred_data = np.expand_dims(x, axis=0)
-        preds = model.predict(preprocess_input(pred_data))
-        results = decode_predictions(preds, top=1)[0]
-        for result in results:
-            # print(result)
-            label = result[1]
-            accu = str(result[2])
-        # gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+        with graph.as_default():
+            preds = model.predict(preprocess_input(pred_data))
+            results = decode_predictions(preds, top=1)[0]
+            for result in results:
+                # print(result)
+                label = result[1]
+                accu = str(result[2])
+            # gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
-        # show the frame
-        new_label = label + accu
-        image = cv2.putText(image, new_label, (10, 25), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 0), 2)
+            # show the frame
+            new_label = label + accu
+            image = cv2.putText(image, new_label, (10, 25), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 0), 2)
 
         cv2.imshow("Frame", image)
         key = cv2.waitKey(1) & 0xFF
@@ -80,6 +81,7 @@ if __name__ == "__main__":
     print("[INFO] loading model...")
     model = MobileNet(weights='imagenet')
     print("[INFO] loading is done")
+    graph = tf.get_default_graph()
 
     param = sys.argv
     order = param[1]
