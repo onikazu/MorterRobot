@@ -1,9 +1,24 @@
 """
-カメラを動かしながら、モーターを動かすプログラム
-→　成功
+モーターを動かしながら、物体認識付きカメラを動かすプログラム
+
 """
 
-# for camera library
+
+import wiringpi
+from picamera.array import PiRGBArray
+from picamera import PiCamera
+from keras.applications.mobilenet import MobileNet, preprocess_input, decode_predictions
+from keras.preprocessing import image
+from PIL import Image
+import numpy as np
+import cv2
+import tensorflow as tf
+
+import threading, time, datetime
+import sys
+import os
+
+
 from picamera.array import PiRGBArray
 from picamera import PiCamera
 from keras.preprocessing import image
@@ -33,14 +48,39 @@ def camera():
         # grab the raw NumPy array representing the image, then initialize the timestamp
         # and occupied/unoccupied text
         image = frame.array
+
+        # machine learning
+        # resize to VGG16 size(224, 224)
+        img = Image.fromarray(np.uint8(image))
+        img = img.resize((224, 224))
+        x = img
+        pred_data = np.expand_dims(x, axis=0)
+        print(preprocess_input(pred_data))
+        preds = model.predict(preprocess_input(pred_data))
+        results = decode_predictions(preds, top=1)[0]
+        for result in results:
+            # print(result)
+            label = result[1]
+            accu = str(result[2])
+        # gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+
+        # show the frame
+        new_label = label + accu
+        image = cv2.putText(image, new_label, (10, 25), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 0), 2)
+
         cv2.imshow("Frame", image)
         key = cv2.waitKey(1) & 0xFF
+
         rawCapture.truncate(0)
         if key == ord("q"):
             break
 
 
 if __name__ == "__main__":
+    print("[INFO] loading model...")
+    model = MobileNet(weights='imagenet')
+    print("[INFO] loading is done")
+
     param = sys.argv
     order = param[1]
 
@@ -60,7 +100,7 @@ if __name__ == "__main__":
     wiringpi.pinMode(motor2_pin, 1)
 
     th1 = threading.Thread(target=motor, name="motor", args=())
-    th2 = threading.Thread(target=camera, name="loop_print", args=())
+    th2 = threading.Thread(target=camera, name="camera", args=())
 
     th1.start()
     th2.start()
