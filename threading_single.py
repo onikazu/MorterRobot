@@ -20,6 +20,7 @@ print("[INFO] loading is done")
 not_exist = True
 graph = tf.get_default_graph()
 
+
 class CameraThread(threading.Thread):
     def __init__(self):
         threading.Thread.__init__(self)
@@ -32,11 +33,12 @@ class CameraThread(threading.Thread):
         global graph
 
         with graph.as_default():
-        # allow the camera to warmup
+            # allow the camera to warmup
             time.sleep(0.1)
 
             # capture frames from camera
             for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True):
+                print("read a frame")
                 # grab the raw NumPy array representing the image, then initialize the timestamp
                 # and occupied/unoccupied text
                 image = frame.array
@@ -64,7 +66,7 @@ class CameraThread(threading.Thread):
                 key = cv2.waitKey(1) & 0xFF
                 # 止まるように
                 if item == stop_item:
-                        not_exist = False
+                    not_exist = False
                 # clear the stream in preparation for the next frame
                 rawCapture.truncate(0)
 
@@ -86,17 +88,17 @@ class MorterThread(threading.Thread):
             while True:
                 if not boolean:
                     print("ブレーキ！")
-                    wiringpi.digitalWrite( motor1_pin, 1 )
-                    wiringpi.digitalWrite( motor2_pin, 1 )
+                    wiringpi.digitalWrite(motor1_pin, 1)
+                    wiringpi.digitalWrite(motor2_pin, 1)
 
         if order == "go":
-            wiringpi.digitalWrite( motor1_pin, 1 )
-            wiringpi.digitalWrite( motor2_pin, 0 )
+            wiringpi.digitalWrite(motor1_pin, 1)
+            wiringpi.digitalWrite(motor2_pin, 0)
             keep_move(not_exist)
 
         elif order == "back":
-            wiringpi.digitalWrite( motor1_pin, 0 )
-            wiringpi.digitalWrite( motor2_pin, 1 )
+            wiringpi.digitalWrite(motor1_pin, 0)
+            wiringpi.digitalWrite(motor2_pin, 1)
             keep_move(not_exist)
 
 
@@ -117,8 +119,8 @@ motor1_pin = 23
 motor2_pin = 24
 
 wiringpi.wiringPiSetupGpio()
-wiringpi.pinMode( motor1_pin, 1 )
-wiringpi.pinMode( motor2_pin, 1 )
+wiringpi.pinMode(motor1_pin, 1)
+wiringpi.pinMode(motor2_pin, 1)
 
 # カメラの初期化(必ず関数の外側で！！！)
 camera = PiCamera()

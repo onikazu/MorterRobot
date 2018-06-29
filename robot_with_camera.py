@@ -19,47 +19,49 @@ import time
 # 引数取得
 import sys
 
+
 # 動くか判定する
 def keep_move(boolean):
     while boolean:
         print('There are no laptops. keep moving!')
     print("ブレーキ！")
-    wiringpi.digitalWrite( right_forward_pin, 1 )
-    wiringpi.digitalWrite( left_forward_pin, 1 )
-    wiringpi.digitalWrite( right_back_pin, 1 )
-    wiringpi.digitalWrite( left_back_pin, 1 )
+    wiringpi.digitalWrite(right_forward_pin, 1)
+    wiringpi.digitalWrite(left_forward_pin, 1)
+    wiringpi.digitalWrite(right_back_pin, 1)
+    wiringpi.digitalWrite(left_back_pin, 1)
 
 
 # モーターの動作に関する関数
 def morter(exists_laptop):
     if order == "goright":
-        wiringpi.digitalWrite( right_forward_pin, 1 )
-        wiringpi.digitalWrite( right_back_pin, 0 )
+        wiringpi.digitalWrite(right_forward_pin, 1)
+        wiringpi.digitalWrite(right_back_pin, 0)
         keep_move(exists_laptop)
     elif order == "backright":
-        wiringpi.digitalWrite( right_forward_pin, 0 )
-        wiringpi.digitalWrite( right_back_pin, 1 )
+        wiringpi.digitalWrite(right_forward_pin, 0)
+        wiringpi.digitalWrite(right_back_pin, 1)
         keep_move(exists_laptop)
     elif order == "goleft":
-        wiringpi.digitalWrite( left_forward_pin, 1 )
-        wiringpi.digitalWrite( left_back_pin, 0 )
+        wiringpi.digitalWrite(left_forward_pin, 1)
+        wiringpi.digitalWrite(left_back_pin, 0)
         keep_move(exists_laptop)
     elif order == "backleft":
-        wiringpi.digitalWrite( left_forward_pin, 0 )
-        wiringpi.digitalWrite( left_back_pin, 1 )
+        wiringpi.digitalWrite(left_forward_pin, 0)
+        wiringpi.digitalWrite(left_back_pin, 1)
         keep_move(exists_laptop)
     elif order == "gostraight":
-        wiringpi.digitalWrite( left_forward_pin, 1 )
-        wiringpi.digitalWrite( left_back_pin, 0 )
-        wiringpi.digitalWrite( right_forward_pin, 1 )
-        wiringpi.digitalWrite( right_back_pin, 0 )
+        wiringpi.digitalWrite(left_forward_pin, 1)
+        wiringpi.digitalWrite(left_back_pin, 0)
+        wiringpi.digitalWrite(right_forward_pin, 1)
+        wiringpi.digitalWrite(right_back_pin, 0)
         keep_move(exists_laptop)
     elif order == "back":
-        wiringpi.digitalWrite( left_forward_pin, 0 )
-        wiringpi.digitalWrite( left_back_pin, 1 )
-        wiringpi.digitalWrite( right_forward_pin, 0 )
-        wiringpi.digitalWrite( right_back_pin, 1 )
+        wiringpi.digitalWrite(left_forward_pin, 0)
+        wiringpi.digitalWrite(left_back_pin, 1)
+        wiringpi.digitalWrite(right_forward_pin, 0)
+        wiringpi.digitalWrite(right_back_pin, 1)
         keep_move(exists_laptop)
+
 
 # カメラの動作に関する関数
 def camera():
@@ -99,14 +101,13 @@ def camera():
         key = cv2.waitKey(1) & 0xFF
         # 止まるように
         if result[1] == stop_item:
-                not_exist = False
+            not_exist = False
         # clear the stream in preparation for the next frame
         rawCapture.truncate(0)
 
         # if the `q` key was pressed, break from the loop
         if key == ord("q"):
             break
-
 
 
 if __name__ == "__main__":
@@ -131,10 +132,10 @@ if __name__ == "__main__":
 
     # GPIO出力モードを1に設定する(onにするということ)
     wiringpi.wiringPiSetupGpio()
-    wiringpi.pinMode( right_forward_pin, 1 )
-    wiringpi.pinMode( right_back_pin, 1 )
-    wiringpi.pinMode( left_back_pin, 1 )
-    wiringpi.pinMode( left_forward_pin, 1 )
+    wiringpi.pinMode(right_forward_pin, 1)
+    wiringpi.pinMode(right_back_pin, 1)
+    wiringpi.pinMode(left_back_pin, 1)
+    wiringpi.pinMode(left_forward_pin, 1)
 
     # ラップトップがあるかどうかのフラグ
     not_exist = True
