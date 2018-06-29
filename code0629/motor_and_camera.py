@@ -21,15 +21,9 @@ def motor():
     if order == "go":
         wiringpi.digitalWrite(motor1_pin, 1)
         wiringpi.digitalWrite(motor2_pin, 0)
-        time.sleep(10)
-        wiringpi.digitalWrite(motor1_pin, 1)
-        wiringpi.digitalWrite(motor2_pin, 1)
 
     elif order == "back":
         wiringpi.digitalWrite(motor1_pin, 0)
-        wiringpi.digitalWrite(motor2_pin, 1)
-        time.sleep(10)
-        wiringpi.digitalWrite(motor1_pin, 1)
         wiringpi.digitalWrite(motor2_pin, 1)
 
 
