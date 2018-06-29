@@ -1,3 +1,9 @@
+"""
+１０秒カウントし、１０秒間だけモーターを動かすプログラム
+→　成功
+
+"""
+
 import wiringpi
 
 import threading, time, datetime
