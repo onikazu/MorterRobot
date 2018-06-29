@@ -34,7 +34,7 @@ def motor():
 
 
 def camera():
-    for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True):
+    for frame in my_camera.capture_continuous(rawCapture, format="bgr", use_video_port=True):
         # grab the raw NumPy array representing the image, then initialize the timestamp
         # and occupied/unoccupied text
         image = frame.array
@@ -50,10 +50,10 @@ if __name__ == "__main__":
     order = param[1]
 
     # camera setting
-    camera = PiCamera()
-    camera.resolution = (320, 240)
-    camera.framerate = 32
-    rawCapture = PiRGBArray(camera, size=(320, 240))
+    my_camera = PiCamera()
+    my_camera.resolution = (320, 240)
+    my_camera.framerate = 32
+    rawCapture = PiRGBArray(my_camera, size=(320, 240))
     time.sleep(0.1)
 
     # motor setting
