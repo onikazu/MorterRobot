@@ -112,7 +112,7 @@ if __name__ == "__main__":
     wiringpi.pinMode(motor2_pin, 1)
 
     does_exist = False
-    stop_item = "laptop"
+    stop_item = "notebook"
     video_frame_step = 5
 
 
