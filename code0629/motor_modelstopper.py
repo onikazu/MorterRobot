@@ -79,7 +79,7 @@ def camera():
         key = cv2.waitKey(1) & 0xFF
 
         if label == stop_item:
-            does_exist == True
+            does_exist = True
 
         rawCapture.truncate(0)
         time.sleep(video_frame_step)
