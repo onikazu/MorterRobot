@@ -18,47 +18,47 @@ def camera():
     global rawCapture
     global stop_item
 
-    with tf.Graph().as_default():
-        # allow the camera to warmup
-        time.sleep(0.1)
 
-        # capture frames from camera
-        for frame in my_camera.capture_continuous(rawCapture, format="bgr", use_video_port=True):
-            print("read a frame")
-            # grab the raw NumPy array representing the image, then initialize the timestamp
-            # and occupied/unoccupied text
-            image = frame.array
-            # machine learning
-            # resize to mobile size(224, 224)
-            img = Image.fromarray(np.uint8(image))
-            img = img.resize((224, 224))
-            x = img
-            pred_data = np.expand_dims(x, axis=0)
-            preds = model.predict(preprocess_input(pred_data))
-            results = decode_predictions(preds, top=1)[0]
-            item = ''
-            for result in results:
-                # print(result)
-                label = result[1]
-                item = label
-                accu = str(result[2])
-            # gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    # allow the camera to warmup
+    time.sleep(0.1)
 
-            # show the frame
-            new_label = label + accu
-            image = cv2.putText(image, new_label, (10, 25), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 0), 2)
+    # capture frames from camera
+    for frame in my_camera.capture_continuous(rawCapture, format="bgr", use_video_port=True):
+        print("read a frame")
+        # grab the raw NumPy array representing the image, then initialize the timestamp
+        # and occupied/unoccupied text
+        image = frame.array
+        # machine learning
+        # resize to mobile size(224, 224)
+        img = Image.fromarray(np.uint8(image))
+        img = img.resize((224, 224))
+        x = img
+        pred_data = np.expand_dims(x, axis=0)
+        preds = model.predict(preprocess_input(pred_data))
+        results = decode_predictions(preds, top=1)[0]
+        item = ''
+        for result in results:
+            # print(result)
+            label = result[1]
+            item = label
+            accu = str(result[2])
+        # gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
-            cv2.imshow("Frame", image)
-            key = cv2.waitKey(1) & 0xFF
-            # 止まるように
-            if item == stop_item:
-                not_exist = False
-            # clear the stream in preparation for the next frame
-            rawCapture.truncate(0)
+        # show the frame
+        new_label = label + accu
+        image = cv2.putText(image, new_label, (10, 25), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 0), 2)
 
-            # if the `q` key was pressed, break from the loop
-            if key == ord("q"):
-                break
+        cv2.imshow("Frame", image)
+        key = cv2.waitKey(1) & 0xFF
+        # 止まるように
+        if item == stop_item:
+            not_exist = False
+        # clear the stream in preparation for the next frame
+        rawCapture.truncate(0)
+
+        # if the `q` key was pressed, break from the loop
+        if key == ord("q"):
+            break
 
 def motor():
     global not_exist
