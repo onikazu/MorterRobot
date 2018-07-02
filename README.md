@@ -2,8 +2,9 @@
 ## 概要
 ４つのタイヤが付いたカメラ付き車型ロボット（未完）
 
-## 使い方
+## 使い方・プログラムの説明
 - test.py
+一つのモーターを操作するプログラム
 test_circuit.JPGのように回路を組み、一つのモータにつなげる。
 命令はコマンド引数を用いる
 第一引数でgo(順回転)、back(逆回転)といった命令。
@@ -15,18 +16,68 @@ python3 test.py go 5
 ~~~
 
 
-- double_test.py  
-.JPGのようにきろ
-
-- robot_with_camera.py  
-命令はコマンド引数を用いる
-第一引数でdouble_test.pyと同じように命令できる
-notebook が映ると止まる
+- double_test.py
+２つのモータを同時に操作するプログラム
+https://qiita.com/imcuddles/items/c05cbea95db1f7469fed
+にあるように回路をつなぐ
 
 ~~~
 # 実行例
-python3 robot_with_camera.py go
+python3 double_test.py gostraight 5
 ~~~
+
+- motor_and_print.py
+一つのモーターを動かしながらカウントを印字するプログラム。モーターは１０秒後に停止する。
+test_circuit.JPGのように回路を組み、一つのモータにつなげる。
+命令はコマンド引数を用いる
+第一引数でgo(順回転)、back(逆回転)といった命令。
+
+~~~
+# 実行例
+python3 motor_and_print.py go 5
+~~~
+
+- motor_and_camera.py
+一つのモーターを動かしながらカメラを同時に操作するプログラム。
+test_circuit.JPGのように回路を組み、一つのモータにつなげる。
+命令はコマンド引数を用いる
+第一引数でgo(順回転)、back(逆回転)といった命令。
+
+~~~
+# 実行例
+python3 motor_and_camera.py go
+~~~
+
+- motor_and_modelcamera.py
+一つのモーターを動かしながら物体認識をするカメラを同時に操作するプログラム。
+test_circuit.JPGのように回路を組み、一つのモータにつなげる。
+命令はコマンド引数を用いる
+第一引数でgo(順回転)、back(逆回転)といった命令。
+
+~~~
+# 実行例
+python3 motor_and_modelcamera.py go
+~~~
+
+- motor_modelstopper.py
+一つのモーターを動かしながら物体認識をするカメラを同時に操作し「notebook」が写ったらモーターを停止するプログラム。
+test_circuit.JPGのように回路を組み、一つのモータにつなげる。
+命令はコマンド引数を用いる
+第一引数でgo(順回転)、back(逆回転)といった命令。
+
+~~~
+# 実行例
+python3 motor_modelstopper.py go
+~~~
+
+- double_motor_modelstopper.py
+２つのモーターを動かしながら物体認識をするカメラを同時に操作し「notebook」が写ったらモーターを停止するプログラム。
+https://qiita.com/imcuddles/items/c05cbea95db1f7469fed
+にあるように回路をつなぐ
+命令はコマンド引数を用いる。
+第一引数でgostraight(直進)、goright(右折)といった命令。
+
+
 
 
 ## 参考資料
