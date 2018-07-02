@@ -1,4 +1,4 @@
-# MorterRobot
+# MoterRobot
 ## 概要
 ４つのタイヤが付いたカメラ付き車型ロボット
 
