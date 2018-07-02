@@ -1,8 +1,5 @@
 """
-モーターを動かしながら、物体認識付きカメラを動かし、
-notebookを見つけたら止まるプログラム
-物体認識にtime.sleepを入れて低負荷にした
-→　成功
+モーターを２つ回し、notebookを見つけたら止まるプログラム
 """
 
 
@@ -36,18 +33,34 @@ import sys
 import os
 
 def motor():
-    if order == "go":
-        wiringpi.digitalWrite(motor1_pin, 1)
-        wiringpi.digitalWrite(motor2_pin, 0)
-
+    if order == "goright":
+        wiringpi.digitalWrite(right_forward_pin, 1)
+        wiringpi.digitalWrite(right_back_pin, 0)
+    elif order == "backright":
+        wiringpi.digitalWrite(right_forward_pin, 0)
+        wiringpi.digitalWrite(right_back_pin, 1)
+    elif order == "goleft":
+        wiringpi.digitalWrite(left_forward_pin, 1)
+        wiringpi.digitalWrite(left_back_pin, 0)
+    elif order == "backleft":
+        wiringpi.digitalWrite(left_forward_pin, 0)
+        wiringpi.digitalWrite(left_back_pin, 1)
+    elif order == "gostraight":
+        wiringpi.digitalWrite(left_forward_pin, 1)
+        wiringpi.digitalWrite(left_back_pin, 0)
+        wiringpi.digitalWrite(right_forward_pin, 1)
+        wiringpi.digitalWrite(right_back_pin, 0)
     elif order == "back":
-        wiringpi.digitalWrite(motor1_pin, 0)
-        wiringpi.digitalWrite(motor2_pin, 1)
-
+        wiringpi.digitalWrite(left_forward_pin, 0)
+        wiringpi.digitalWrite(left_back_pin, 1)
+        wiringpi.digitalWrite(right_forward_pin, 0)
+        wiringpi.digitalWrite(right_back_pin, 1)
     while True:
         if does_exist:
-            wiringpi.digitalWrite(motor1_pin, 1)
-            wiringpi.digitalWrite(motor2_pin, 1)
+            wiringpi.digitalWrite(right_forward_pin, 1)
+            wiringpi.digitalWrite(left_forward_pin, 1)
+            wiringpi.digitalWrite(right_back_pin, 1)
+            wiringpi.digitalWrite(left_back_pin, 1)
 
 
 def camera():
@@ -105,12 +118,17 @@ if __name__ == "__main__":
     time.sleep(0.1)
 
     # motor setting
-    motor1_pin = 23
-    motor2_pin = 24
+    right_forward_pin = 4
+    right_back_pin = 17
+    left_back_pin = 11
+    left_forward_pin = 9
 
+    # GPIO出力モードを1に設定する(onにするということ)
     wiringpi.wiringPiSetupGpio()
-    wiringpi.pinMode(motor1_pin, 1)
-    wiringpi.pinMode(motor2_pin, 1)
+    wiringpi.pinMode(right_forward_pin, 1)
+    wiringpi.pinMode(right_back_pin, 1)
+    wiringpi.pinMode(left_back_pin, 1)
+    wiringpi.pinMode(left_forward_pin, 1)
 
     does_exist = False
     stop_item = "notebook"
