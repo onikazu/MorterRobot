@@ -116,7 +116,6 @@ if __name__ == "__main__":
     stop_item = "notebook"
     video_frame_step = 5
 
-
     th1 = threading.Thread(target=motor, name="motor", args=())
     th2 = threading.Thread(target=camera, name="camera", args=())
 
