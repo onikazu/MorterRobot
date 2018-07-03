@@ -34,7 +34,7 @@ while True:
     frame = imutils.resize(frame, width=400)
 
     # prepare the image to be classified by our deep learning network
-    image = cv2.resize(frame, (28, 28))
+    image = cv2.resize(frame, (224, 224))
     image = image.astype("float") / 255.0
     image = img_to_array(image)
     image = np.expand_dims(image, axis=0)
