@@ -2,7 +2,6 @@
 モーターを２つ回し、notebookを見つけたら止まるプログラム
 """
 
-
 import wiringpi
 from picamera.array import PiRGBArray
 from picamera import PiCamera
@@ -17,7 +16,6 @@ import threading, time, datetime
 import sys
 import os
 
-
 from picamera.array import PiRGBArray
 from picamera import PiCamera
 from keras.preprocessing import image
@@ -31,6 +29,7 @@ import wiringpi
 import threading, time, datetime
 import sys
 import os
+
 
 def motor():
     if order == "goright":
@@ -133,7 +132,6 @@ if __name__ == "__main__":
     does_exist = False
     stop_item = "notebook"
     video_frame_step = 5
-
 
     th1 = threading.Thread(target=motor, name="motor", args=())
     th2 = threading.Thread(target=camera, name="camera", args=())
