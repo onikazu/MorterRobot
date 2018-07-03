@@ -1,36 +1,18 @@
-"""
-モーターを２つ回し、notebookを見つけたら止まるプログラム
-"""
-
-
-import wiringpi
-from picamera.array import PiRGBArray
-from picamera import PiCamera
+from keras.preprocessing.image import img_to_array
+from keras.models import load_model
 from keras.applications.mobilenet import MobileNet, preprocess_input, decode_predictions
-from keras.preprocessing import image
-from PIL import Image
-import numpy as np
-import cv2
+import wiringpi
 import tensorflow as tf
 
-import threading, time, datetime
-import sys
-import os
-
-
-from picamera.array import PiRGBArray
-from picamera import PiCamera
-from keras.preprocessing import image
-from PIL import Image
+from imutils.video import VideoStream
+from threading import Thread
 import numpy as np
+import imutils
+import time
 import cv2
-
-# for motor library
-import wiringpi
-
-import threading, time, datetime
-import sys
 import os
+import sys
+
 
 def motor():
     if order == "goright":
@@ -64,18 +46,19 @@ def motor():
 
 
 def camera():
-    global does_exist
-    for frame in my_camera.capture_continuous(rawCapture, format="bgr", use_video_port=True):
-        # grab the raw NumPy array representing the image, then initialize the timestamp
-        # and occupied/unoccupied text
-        image = frame.array
+    while True:
+        global does_exist
+        # grab the frame from the threaded video stream and resize it
+        # to have a maximum width of 400 pixels
+        frame = vs.read()
+        frame = imutils.resize(frame, width=400)
 
-        # machine learning
-        # resize to mobile net size(224, 224)
-        img = Image.fromarray(np.uint8(image))
-        img = img.resize((224, 224))
-        x = img
-        pred_data = np.expand_dims(x, axis=0)
+        # prepare the image to be classified by our deep learning network
+        image = cv2.resize(frame, (28, 28))
+        image = image.astype("float") / 255.0
+        image = img_to_array(image)
+        image = np.expand_dims(image, axis=0)
+        pred_data = np.expand_dims(image, axis=0)
         with graph.as_default():
             preds = model.predict(preprocess_input(pred_data))
             results = decode_predictions(preds, top=1)[0]
@@ -95,8 +78,7 @@ def camera():
         if label == stop_item:
             does_exist = True
 
-        rawCapture.truncate(0)
-        time.sleep(video_frame_step)
+        # rawCapture.truncate(0)
         if key == ord("q"):
             break
 
@@ -105,17 +87,14 @@ if __name__ == "__main__":
     print("[INFO] loading model...")
     model = MobileNet(weights='imagenet')
     print("[INFO] loading is done")
+    print("[INFO] starting video stream...")
     graph = tf.get_default_graph()
+    # vs = VideoStream(src=0).start()
+    vs = VideoStream(usePiCamera=True).start()
+    time.sleep(5.0)
 
     param = sys.argv
     order = param[1]
-
-    # camera setting
-    my_camera = PiCamera()
-    my_camera.resolution = (320, 240)
-    my_camera.framerate = 32
-    rawCapture = PiRGBArray(my_camera, size=(320, 240))
-    time.sleep(0.1)
 
     # motor setting
     right_forward_pin = 4
@@ -132,11 +111,6 @@ if __name__ == "__main__":
 
     does_exist = False
     stop_item = "notebook"
-    video_frame_step = 5
 
-
-    th1 = threading.Thread(target=motor, name="motor", args=())
-    th2 = threading.Thread(target=camera, name="camera", args=())
-
-    th1.start()
-    th2.start()
+    th1 = Thread(target=motor, name="motor", args=())
+    th2 = Thread(target=camera, name="camera", args=())
