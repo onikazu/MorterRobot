@@ -53,7 +53,7 @@ while True:
     # santa alarm
 
     # build the label and draw it on the frame
-    label = "{}: {:.2f}%".format(label, proba * 100)
+    label = "{0}: {1}%".format(label, proba * 100)
     frame = cv2.putText(frame, label, (10, 25), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 0), 2)
 
     # show the output frame
